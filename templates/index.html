@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="../static/MainPage.css">
+    <title>Web Design Homework</title>
+</head>
+
+<body style = "background-color:rgb(157, 193, 255);
+    font-family: Arial">
+    <article>
+        <header>
+            <a href = "/">
+                <!--change back to -->
+                <h2 class = "headbox" style = "text-align: center; font-weight: bold">what</h2></a>
+            <!-- <nav class = "navbar navbar-expand-lg navbar-light bg-light navbars">
+                <div class = "nav-item dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" 
+                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" 
+                    aria-expanded="false" style = "font-family: helvetica; font-weight: bold">
+                        DROP
+                    </button>
+                    <div class = "dropdown-menu linkstyle" aria-labelledby="dropdownMenuButton">
+                            <a href ="temperature.html" 
+                            class = "dropdown-item" href = "#la">Temperature</a>
+                            <br>
+                            <a href ="humidity.html" 
+                            class = "dropdown-item" href = "#la">Humidity</a>
+                            <br>
+                            <a href ="wind.html" 
+                            class = "dropdown-item" href = "#la">Wind Speed</a>
+                            <a href ="cloud.html" 
+                            class = "dropdown-item" href = "#la">Cloudiness</a>
+                    </div>
+                </div>
+            </nav> -->
+
+            <!-- <a class="btn btn-secondary comparisons" 
+            href="comparison.html" 
+            type="button" style = "float: right; font-family: helvetica; font-weight: bold">COMPARISON</a>
+
+            <a class="btn btn-secondary data" 
+            href="data.html" 
+            type="button" style = "float: right; font-family: helvetica; font-weight: bold">DATA</a> -->
+
+        </header>
+    </article>
+
+    <div class = "col-md-12">
+        <div class = "box background">
+            <div class = "bottom">
+            <h2 style = "text-align: center; padding: 13px; margin: 14px;
+                        color: rgb(255, 255, 255)">SUBTITLE/CLICK FOR STORIES</h2>
+            </div>
+
+            <div class = "imgrow">
+                <div class = "col-md-6">
+                    <a href = "/map">
+                        <img src ="https://i.kym-cdn.com/entries/icons/original/000/030/659/ben.jpg" 
+                        class = "imgmain" style ="width: 100%">
+                        
+                    </a>
+                </div>
+                <div class = "col-md-6">
+                    <a href = "cloud.html">
+                        <img class = "imgmain" style ="width: 100%" 
+                        src = "https://i.kym-cdn.com/entries/icons/original/000/030/659/ben.jpg">
+                    </a>
+                </div>
+            </div>
+            <div class = "imgrow">
+                <div class = "col-md-6">
+                    <a href = "humidity.html">
+                        <img class = "imgmain" style ="width: 100%" 
+                        src = "https://i.kym-cdn.com/entries/icons/original/000/030/659/ben.jpg">
+                    </a>
+                </div>
+                <div class = "col-md-6">
+                    <a href = "wind.html">
+                        {{data.incomeData.NY}}
+                        <!-- <img class = "imgmain" style ="width: 100%" 
+                        src = "https://i.kym-cdn.com/entries/icons/original/000/030/659/ben.jpg"> -->
+                    </a>
+                </div>
+            </div> 
+        </div>   
+    </div>
+
+<!-- {{ data.month }} -->
+<!-- <script>
+
+        // geojson2 = {{ data }}
+        
+        var geojson2={ type: 'FeatureCollection','features':[]} //copied from above
+        
+        var features2=[];
+        
+        AngelsStates.forEach(function(item) {
+        
+            var lat = item['latitude'];
+            var long = item['longitude'];
+            // console.log(lat,long);
+              var itemDict1={}
+              itemDict1['type']='Feature'
+              itemDict1['geometry'] = {"type":'Point',
+              "coordinates" : [long,lat]}
+              itemDict1['properties'] ={'title':item['state'],
+              'description':'Yeezys...change this'};
+              // console.log(itemDict1);
+              geojson2['features'].push(itemDict1);
+                  });
+        
+          console.log(geojson2);
+          // add markers to map
+        geojson2.features.forEach(function(marker) {
+        
+            // create a HTML element for each feature
+            var el = document.createElement('div');
+            el.className = 'marker';
+          
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+              .setLngLat(marker.geometry.coordinates)
+              .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+              .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+              .addTo(map);
+          });
+        
+        
+        </script> -->
+</body>

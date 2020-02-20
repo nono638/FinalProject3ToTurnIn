@@ -1,0 +1,92 @@
+        .background {
+            background-color: beige;
+        }
+        .bottom {
+            border-bottom: solid rgb(224, 223, 223) 2px;
+            width: 80%;
+            margin: 0px auto;
+        }
+        .box {
+            background: rgb(0, 0, 0);
+            position: relative;
+            top: 10px;
+            margin: 8px;
+            border-radius: 20px;
+        }
+        .header {
+            width: 100%;
+            /* position: relative; */
+            right: 0;
+            left: 0;
+            top: 0;
+            background-color: white;
+            height: 75px;
+            }
+        .headbox {
+            z-index: 1;
+            height: 75px;
+            padding: 20px;
+            margin: 0;
+            color: rgb(0, 0, 0);
+            background-color: rgb(84, 164, 234);
+        }
+        .headtext {
+            position: absolute;
+            text-align: center;
+        }
+        .navbars {
+            right: 180px; 
+            top: 20px;
+            float: right;
+            position: absolute;
+            font-weight: bold;
+            color:rgb(104, 102, 102);
+            text-decoration: none;
+        }
+        .linkstyle{
+            text-align: center;
+        }
+        .comparisons {
+            text-align: center;
+            color: rgb(106, 106, 106);
+            top: 20px;
+            position: absolute;
+            right: 58px;
+        }
+        .data {
+            text-align: center;
+            color: rgb(106, 106, 106);
+            position: relative;
+            top: 20px;
+            right: 5x;
+        }
+        .imgmain {
+            margin-top: 20px;
+            display: flex; 
+            border-radius: 30px;
+        }
+        .imgmain:hover {
+            border: solid 2px teal
+        }
+        .imgcolumn {
+            float: left;
+            width: 50%;
+        }
+        .imgrow::after { 
+            content: "";
+            clear: both;
+            display: table;
+        }    
+        th {
+            height: 10px;
+            padding: 8px;
+            text-align: center;
+            font-family: arial;
+        }
+        td {
+            font-family: arial;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }

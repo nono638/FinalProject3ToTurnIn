@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset = "UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="homework.css">
+    <title>Web Design Homework</title>
+</head>
+
+<body style = "background-color:rgb(191, 188, 255);
+    font-family: Georgia" >
+    <article>
+        <header class ="header">
+            <a href = "homework.html">
+            <h2 class = "headtext headbox">Lattitude</h2></a>
+            <nav class = "navbar navbar-expand-lg navbar-light bg-light navbars">
+                <div class = "nav-item dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" 
+                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" 
+                    aria-expanded="false" style = "font-family: helvetica; font-weight: bold">
+                        DROP
+                    </button>
+                    <div class = "dropdown-menu linkstyle" aria-labelledby="dropdownMenuButton">
+                            <a href ="temperature.html" 
+                            class = "dropdown-item" href = "#la">Temperature</a>
+                            <br>
+                            <a href ="humidity.html" 
+                            class = "dropdown-item" href = "#la">Humidity</a>
+                            <br>
+                            <a href ="wind.html" 
+                            class = "dropdown-item" href = "#la">Wind Speed</a>
+                            <a href ="cloud.html" 
+                            class = "dropdown-item" href = "#la">Cloudiness</a>
+                    </div>
+                </div>
+            </nav>
+
+            <a class="btn btn-secondary comparisons" 
+            href="comparison.html" 
+            type="button" style = "float: right; font-family: helvetica; font-weight: bold">COMPARISON</a>
+
+            <a class="btn btn-secondary data" 
+            href="data.html" 
+            type="button" style = "float: right; font-family: helvetica; font-weight: bold">DATA</a>
+
+        </header>
+    </article>
+
+    <div class = "col-md-12">
+        <div class = "box background">
+            <div class = "bottom">
+            <h2 style = "text-align: center; padding: 13px; margin: 14px;
+                        color: teal; font-weight: bold">Comparison: Latitude vs. X</h2>
+            </div>
+            <br>
+            <p style = "text-align: center">Click on any image to get an in-depth analysis<p>
+            <br>
+            <div class = "imgrow">
+                <div class = "imgcolumn">
+                    <a href = "temperature.html">
+                        <img class = "imgmain" style ="width: 90%" 
+                         src = "temperature.png">
+                    </a>
+                </div>
+                <div class = "imgcolumn">
+                    <a href = "cloud.html">
+                        <img class = "imgmain" style ="width: 90%" 
+                        src = "Cloudiness.png">
+                    </a>
+                </div>
+            </div>
+            <div class = "imgrow">
+                <div class = "imgcolumn">
+                    <a href = "humidity.html">
+                        <img class = "imgmain" style ="width: 90%" 
+                        src = "humidity.png">
+                    </a>
+                </div>
+                <div class = "imgcolumn">
+                    <a href = "wind.html">
+                        <img class = "imgmain" style ="width: 90%" 
+                        src = "Windiness.png">
+                    </a>
+                </div>
+            </div> 
+        </div>   
+    </div>
+
+
+
+</body>
