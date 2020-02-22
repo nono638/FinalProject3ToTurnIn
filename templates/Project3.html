@@ -41,7 +41,7 @@
         <header>
             <a href = "/">
             <h2 class = "logoContainer headbox" 
-            style = "text-align: center; font-weight: bold">TITLE</h2></a>
+            style = "text-align: center; font-weight: bold">Sneaker Sales</h2></a>
 
         </header>
       </article>
@@ -133,19 +133,20 @@
     </script>
 
     <script type="text/javascript" src="../static/Logic.js"></script>
-     <!--<script type ="text/javascript">
-     let entireDataSet2 = ({{ data3 | safe }});
-     console.log(entireDataSet2);
-
-     
 
 
-CreateMap(entireDataSet2);
-     
-     </script>-->
+    <!-- The Following is an attempt to rank state income: -->
+
+
+
 <script type ="text/javascript">
   console.log("About to create map...");
-     CreateMap({{data | safe }});
+    let returned = CreateMap({{data | safe }});
+    console.log(returned);
+
+    L.control.layers( returned, {
+  collapsed: false
+}).addTo(map);
     </script>
     </body> 
 

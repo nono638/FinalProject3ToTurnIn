@@ -332,6 +332,43 @@ console.log("We're in CreatMap from Logic.js");
 
 AngelsStates.forEach(function(item) {
 
+  let givenStateName = item['state'].toString();
+
+let TotalSalesOfGivenState = 
+EntireDataParam['sneakerData'][givenStateName]['Total_Sales'];
+
+let IncomeData = formatNumber(
+EntireDataParam['incomeData'][givenStateName]['Income']);
+
+let StatePopulation = 
+  EntireDataParam['statePopulations'][givenStateName];
+
+
+
+
+
+  
+  var DataForMapMarker = 'Per Capita Income: $'+ 
+   IncomeData +
+  '<br>' +
+  'Gross StockX Sneaker Sales: $'+ 
+  formatNumber( TotalSalesOfGivenState) +
+  '<br>' + 
+  'Population: ' +
+  formatNumber( StatePopulation) +
+  '<br>' + 
+  'Per Capita StockX Sneaker Spending: $'+
+  (TotalSalesOfGivenState/StatePopulation).toFixed(2)
+  
+  ;
+  
+  if (DataForMapMarker === undefined){
+    DataForMapMarker= 'Undefined!!'
+
+  }  
+  
+  // CoopersData.state; 
+
     var lat = item['latitude'];
     var long = item['longitude'];
     // console.log(lat,long);
@@ -339,10 +376,10 @@ AngelsStates.forEach(function(item) {
       itemDict1['type']='Feature'
       itemDict1['geometry'] = {'type':'Point',
       'coordinates': [long,lat]}
-      itemDict1['properties'] ={'title':item['state'],
-      'description': 'La' };
-      itemDict1['properties'] ={'title':item['state'],
-      'description':EntireDataParam.sneakerData.NY   };
+      // itemDict1['properties'] ={'title':item['state'],
+      // 'description': 'La' };
+      itemDict1['properties'] ={'title': givenStateName,
+      'description':DataForMapMarker   };
 
       // console.log(itemDict1);
       geojson2['features'].push(itemDict1);
@@ -363,4 +400,63 @@ geojson2.features.forEach(function(marker) {
       .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
       .addTo(map);
   });
+
+
+
+
+
+
+
+
+
+
+
+// The following attempts to make the circles and control:
+var sneakerCircles = [];
+var incomeCircles = [];
+
+// Loop through locations and create city and state markers
+for (var i = 0; i < AngelsStates.length; i++) {
+
+  let coordinates = [AngelsStates[i]['latitude'],AngelsStates[i]['longitude']]
+  // Setting the marker radius for the state by passing population into the markerSize function
+  sneakerCircles.push(
+    L.circle(coordinates, {
+      stroke: false,
+      fillOpacity: 0.65,
+      color: "white",
+      fillColor: "white",
+      radius: EntireDataParam['incomeData'][AngelsStates[i]['state']]['Total_Sales'] / 100
+    })
+  );
+
+  // Setting the marker radius for the city by passing population into the markerSize function
+  incomeCircles.push(
+    L.circle(coordinates, {
+      stroke: false,
+      fillOpacity: 0.55,
+      color: "orange",
+      fillColor: "orange",
+      radius: 99
+      // markerSize(locations[i].city.population)
+    })
+  );
+}
+var sneakerCircles2 = L.layerGroup(sneakerCircles);
+var incomeCircles2 = L.layerGroup(incomeCircles);
+
+CircleOverlayDict = {
+  "SneakerSales":sneakerCircles2,
+  "Income":incomeCircles2
+};
+return CircleOverlayDict
+// L.control.layers( CircleOverlayDict, {
+//   collapsed: false
+// }).addTo(map);
+
+// end of createMap
+}
+
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
