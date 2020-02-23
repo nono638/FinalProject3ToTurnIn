@@ -1,244 +1,36 @@
 from flask import Flask, render_template
+import pandas as pd
+import json
+import sqlalchemy
+from sqlalchemy import create_engine
+
+#enter password for postgreSQL DB
+password="smeg1205"
+rds_connection_string = f"postgres:{password}@localhost:5432/SneakerData"
+#MAKES ENGINE/DATABSE CONNECTION:
+engine = create_engine(f'postgresql://{rds_connection_string}')
+conn = engine.connect()
+
+sneakers_query = """
+    select * from public."Sneakers"
+"""
+sneakers_query_df = pd.read_sql(sneakers_query,conn)
+sneakers_query_df = sneakers_query_df.set_index('State')
+sneakers_data = sneakers_query_df.to_dict('index')
+
+income_query = """
+    select * from public."Income"
+"""
+income_query_df = pd.read_sql(income_query,conn)
+income_query_df = income_query_df.set_index('State')
+income_data = income_query_df.to_dict('index')
+
+entireDataset = {}
+entireDataset['sneakerData'] = sneakers_data
+entireDataset['incomeData'] = income_data
+entireDataset['statePopulations'] = {'California': 39937489, 'Texas': 29472295, 'Florida': 21992985, 'New York': 19440469, 'Pennsylvania': 12820878, 'Illinois': 12659682, 'Ohio': 11747694, 'Georgia': 10736059, 'North Carolina': 10611862, 'Michigan': 10045029, 'New Jersey': 8936574, 'Virginia': 8626207, 'Washington': 7797095, 'Arizona': 7378494, 'Massachusetts': 6976597, 'Tennessee': 6897576, 'Indiana': 6745354, 'Missouri': 6169270, 'Maryland': 6083116, 'Wisconsin': 5851754, 'Colorado': 5845526, 'Minnesota': 5700671, 'South Carolina': 5210095, 'Alabama': 4908621, 'Louisiana': 4645184, 'Kentucky': 4499692, 'Oregon': 4301089, 'Oklahoma': 3954821, 'Connecticut': 3563077, 'Utah': 3282115, 'Iowa': 3179849, 'Nevada': 3139658, 'Arkansas': 3038999, 'Puerto Rico': 3032165, 'Mississippi': 2989260, 'Kansas': 2910357, 'New Mexico': 2096640, 'Nebraska': 1952570, 'Idaho': 1826156, 'West Virginia': 1778070, 'Hawaii': 1412687, 'New Hampshire': 1371246, 'Maine': 1345790, 'Montana': 1086759, 'Rhode Island': 1056161, 'Delaware': 982895, 'South Dakota': 903027, 'North Dakota': 761723, 'Alaska': 734002, 'District of Columbia': 720687, 'Vermont': 628061, 'Wyoming': 567025}
 
 
-entireDataset = {
-    'incomeData' : {'Alabama': {'Income': 41996.0},
- 'Alaska': {'Income': 59057.0},
- 'Arizona': {'Income': 44077.0},
- 'Arkansas': {'Income': 43013.0},
- 'California': {'Income': 63075.0},
- 'Colorado': {'Income': 57955.0},
- 'Connecticut': {'Income': 75623.0},
- 'Delaware': {'Income': 52089.0},
- 'District of Columbia': {'Income': 81442.0},
- 'Far West': {'Income': 60889.0},
- 'Florida': {'Income': 49679.0},
- 'Georgia': {'Income': 46198.0},
- 'Great Lakes': {'Income': 50590.0},
- 'Hawaii': {'Income': 55052.0},
- 'Idaho': {'Income': 43625.0},
- 'Illinois': {'Income': 56248.0},
- 'Indiana': {'Income': 46848.0},
- 'Iowa': {'Income': 49723.0},
- 'Kansas': {'Income': 50958.0},
- 'Kentucky': {'Income': 42264.0},
- 'Louisiana': {'Income': 45862.0},
- 'Maine': {'Income': 48579.0},
- 'Maryland': {'Income': 62866.0},
- 'Massachusetts': {'Income': 71169.0},
- 'Michigan': {'Income': 48046.0},
- 'Mideast': {'Income': 64074.0},
- 'Minnesota': {'Income': 57047.0},
- 'Mississippi': {'Income': 37663.0},
- 'Missouri': {'Income': 47456.0},
- 'Montana': {'Income': 47010.0},
- 'Nebraska': {'Income': 52624.0},
- 'Nevada': {'Income': 48687.0},
- 'New England': {'Income': 67351.0},
- 'New Hampshire': {'Income': 60905.0},
- 'New Jersey': {'Income': 67640.0},
- 'New Mexico': {'Income': 41379.0},
- 'New York': {'Income': 68253.0},
- 'North Carolina': {'Income': 45835.0},
- 'North Dakota': {'Income': 54856.0},
- 'Ohio': {'Income': 48407.0},
- 'Oklahoma': {'Income': 45731.0},
- 'Oregon': {'Income': 50423.0},
- 'Pennsylvania': {'Income': 55736.0},
- 'Plains': {'Income': 51682.0},
- 'Rhode Island': {'Income': 54466.0},
- 'Rocky Mountain': {'Income': 51937.0},
- 'South Carolina': {'Income': 43505.0},
- 'South Dakota': {'Income': 51530.0},
- 'Southeast': {'Income': 47024.0},
- 'Southwest': {'Income': 48115.0},
- 'Tennessee': {'Income': 46649.0},
- 'Texas': {'Income': 49944.0},
- 'United States': {'Income': 54034.0},
- 'Utah': {'Income': 45946.0},
- 'Vermont': {'Income': 53922.0},
- 'Virginia': {'Income': 57390.0},
- 'Washington': {'Income': 61423.0},
- 'West Virginia': {'Income': 40417.0},
- 'Wisconsin': {'Income': 51257.0},
- 'Wyoming': {'Income': 59662.0}}
-,
-
-    
-    # {'New York':'Yeezys(from entireDataset)',
-    #                 'New Jersey':'Jersey Shoes',
-    #                 "Washington":'Yeeeeezs'},
-    'sneakerData' : 
-        {'Alabama': {'Total_Sales': 117312,
-  'latitude': 32.318231,
-  'longitude': -86.902298},
- 'Alaska': {'Total_Sales': 20309,
-  'latitude': 63.588753000000004,
-  'longitude': -154.493062},
- 'Arizona': {'Total_Sales': 475045,
-  'latitude': 34.048928000000004,
-  'longitude': -111.093731},
- 'Arkansas': {'Total_Sales': 51284,
-  'latitude': 35.20105,
-  'longitude': -91.83183299999999},
- 'California': {'Total_Sales': 6457851,
-  'latitude': 36.778261,
-  'longitude': -119.41793200000001},
- 'Colorado': {'Total_Sales': 286684,
-  'latitude': 39.550051,
-  'longitude': -105.782067},
- 'Connecticut': {'Total_Sales': 324458,
-  'latitude': 41.603221000000005,
-  'longitude': -73.087749},
- 'Delaware': {'Total_Sales': 416904,
-  'latitude': 38.910832,
-  'longitude': -75.52767},
- 'District of Columbia': {'Total_Sales': 90801,
-  'latitude': 38.905985,
-  'longitude': -77.03341800000001},
- 'Florida': {'Total_Sales': 2026021,
-  'latitude': 27.664827000000002,
-  'longitude': -81.515754},
- 'Georgia': {'Total_Sales': 578339,
-  'latitude': 32.157435,
-  'longitude': -82.907123},
- 'Hawaii': {'Total_Sales': 135945,
-  'latitude': 19.898682,
-  'longitude': -155.66585700000002},
- 'Idaho': {'Total_Sales': 30023,
-  'latitude': 44.068202,
-  'longitude': -114.74204099999999},
- 'Illinois': {'Total_Sales': 1168022,
-  'latitude': 40.633125,
-  'longitude': -89.398528},
- 'Indiana': {'Total_Sales': 297742,
-  'latitude': 40.551217,
-  'longitude': -85.602364},
- 'Iowa': {'Total_Sales': 165939,
-  'latitude': 41.878003,
-  'longitude': -93.097702},
- 'Kansas': {'Total_Sales': 102002,
-  'latitude': 39.011902,
-  'longitude': -98.484246},
- 'Kentucky': {'Total_Sales': 129430,
-  'latitude': 37.839333,
-  'longitude': -84.27001800000001},
- 'Louisiana': {'Total_Sales': 159907,
-  'latitude': 31.244822999999997,
-  'longitude': -92.14502399999999},
- 'Maine': {'Total_Sales': 37733,
-  'latitude': 45.253783,
-  'longitude': -69.44546899999999},
- 'Maryland': {'Total_Sales': 574294,
-  'latitude': 39.045755,
-  'longitude': -76.641271},
- 'Massachusetts': {'Total_Sales': 861703,
-  'latitude': 42.407211,
-  'longitude': -71.382437},
- 'Michigan': {'Total_Sales': 815486,
-  'latitude': 44.314844,
-  'longitude': -85.602364},
- 'Minnesota': {'Total_Sales': 215887,
-  'latitude': 46.729553,
-  'longitude': -94.6859},
- 'Mississippi': {'Total_Sales': 44076,
-  'latitude': 32.354668,
-  'longitude': -89.398528},
- 'Missouri': {'Total_Sales': 200738,
-  'latitude': 37.964253,
-  'longitude': -91.83183299999999},
- 'Montana': {'Total_Sales': 14821,
-  'latitude': 46.879682,
-  'longitude': -110.36256599999999},
- 'Nebraska': {'Total_Sales': 67982,
-  'latitude': 41.492537,
-  'longitude': -99.901813},
- 'Nevada': {'Total_Sales': 257097,
-  'latitude': 38.802609999999994,
-  'longitude': -116.419389},
- 'New Hampshire': {'Total_Sales': 76054,
-  'latitude': 43.193852,
-  'longitude': -71.572395},
- 'New Jersey': {'Total_Sales': 1501996,
-  'latitude': 40.058324,
-  'longitude': -74.405661},
- 'New Mexico': {'Total_Sales': 70584,
-  'latitude': 34.97273,
-  'longitude': -105.03236299999999},
- 'New York': {'Total_Sales': 5195701,
-  'latitude': 43.299428000000006,
-  'longitude': -74.217933},
- 'North Carolina': {'Total_Sales': 395574,
-  'latitude': 35.759572999999996,
-  'longitude': -79.0193},
- 'North Dakota': {'Total_Sales': 21164,
-  'latitude': 47.551493,
-  'longitude': -101.002012},
- 'Ohio': {'Total_Sales': 540417,
-  'latitude': 40.417287,
-  'longitude': -82.907123},
- 'Oklahoma': {'Total_Sales': 114317,
-  'latitude': 35.007752,
-  'longitude': -97.092877},
- 'Oregon': {'Total_Sales': 2500519,
-  'latitude': 43.804133,
-  'longitude': -120.554201},
- 'Pennsylvania': {'Total_Sales': 922483,
-  'latitude': 41.203322,
-  'longitude': -77.194525},
- 'Rhode Island': {'Total_Sales': 99837,
-  'latitude': 41.580095,
-  'longitude': -71.477429},
- 'South Carolina': {'Total_Sales': 174955,
-  'latitude': 33.836081,
-  'longitude': -81.163725},
- 'South Dakota': {'Total_Sales': 16863,
-  'latitude': 43.969515,
-  'longitude': -99.901813},
- 'Tennessee': {'Total_Sales': 226053,
-  'latitude': 35.517491,
-  'longitude': -86.58044699999999},
- 'Texas': {'Total_Sales': 1701268,
-  'latitude': 31.968598999999998,
-  'longitude': -99.901813},
- 'Utah': {'Total_Sales': 143070,
-  'latitude': 39.32098,
-  'longitude': -111.093731},
- 'Vermont': {'Total_Sales': 29039,
-  'latitude': 44.558803000000005,
-  'longitude': -72.577841},
- 'Virginia': {'Total_Sales': 651362,
-  'latitude': 37.431573,
-  'longitude': -78.656894},
- 'Washington': {'Total_Sales': 597157,
-  'latitude': 47.751073999999996,
-  'longitude': -120.74013899999999},
- 'West Virginia': {'Total_Sales': 44276,
-  'latitude': 38.597626,
-  'longitude': -80.454903},
- 'Wisconsin': {'Total_Sales': 265916,
-  'latitude': 43.784440000000004,
-  'longitude': -88.787868},
- 'Wyoming': {'Total_Sales': 11149,
-  'latitude': 43.075967999999996,
-  'longitude': -107.29028400000001}
-        },
-        'statePopulations':
-        {'California': 39937489, 'Texas': 29472295, 'Florida': 21992985, 'New York': 19440469, 'Pennsylvania': 12820878, 'Illinois': 12659682, 'Ohio': 11747694, 'Georgia': 10736059, 'North Carolina': 10611862, 'Michigan': 10045029, 'New Jersey': 8936574, 'Virginia': 8626207, 'Washington': 7797095, 'Arizona': 7378494, 'Massachusetts': 6976597, 'Tennessee': 6897576, 'Indiana': 6745354, 'Missouri': 6169270, 'Maryland': 6083116, 'Wisconsin': 5851754, 'Colorado': 5845526, 'Minnesota': 5700671, 'South Carolina': 5210095, 'Alabama': 4908621, 'Louisiana': 4645184, 'Kentucky': 4499692, 'Oregon': 4301089, 'Oklahoma': 3954821, 'Connecticut': 3563077, 'Utah': 3282115, 'Iowa': 3179849, 'Nevada': 3139658, 'Arkansas': 3038999, 'Puerto Rico': 3032165, 'Mississippi': 2989260, 'Kansas': 2910357, 'New Mexico': 2096640, 'Nebraska': 1952570, 'Idaho': 1826156, 'West Virginia': 1778070, 'Hawaii': 1412687, 'New Hampshire': 1371246, 'Maine': 1345790, 'Montana': 1086759, 'Rhode Island': 1056161, 'Delaware': 982895, 'South Dakota': 903027, 'North Dakota': 761723, 'Alaska': 734002, 'District of Columbia': 720687, 'Vermont': 628061, 'Wyoming': 567025}
-
-
-  
-      
-        
-        
-        # 'New York': 50000,
-        #             'New Jersey':40000,
-        #             'Washington':543253
-                    
-                    
-                    
-                    
-}
 
 app = Flask(__name__)
 
@@ -254,3 +46,6 @@ def map():
 
 if __name__ == "__main__": 
     app.run(debug = True)
+
+
+app = Flask(__name__)
